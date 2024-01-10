@@ -12,9 +12,13 @@ namespace Main
 
             while (true)
             {
-                Console.WriteLine("Tjenare");
-                Console.WriteLine("Vill du lägga till en bok (LB), ta bort en bok (RM) eller visa biblioteket (VB)? Om du vill avsulta programmet tryck 'X'");
-                Console.WriteLine("Om du vill låna ut en bok, skriv (L)");
+                Console.WriteLine("Välkommen till Babels Bibliotek");
+                Console.WriteLine("För att navigera biblioteket bör du känna till ett par funktioner, de är:");
+
+                Console.WriteLine("Lägg till en bok (LB), ta bort en bok (RM), visa biblioteket (VB), låna en bok (L),");
+                Console.WriteLine("Lämna tillbaka en bok (RE)");
+                Console.WriteLine("Om du vill avsulta programmet tryck 'X'");
+                Console.Write("Din inmatning: ");
                 string ui = Console.ReadLine();
 
                 if (ui == "LB" || ui == "lb")
@@ -36,6 +40,10 @@ namespace Main
                 else if (ui == "l" || ui == "L")
                 {
                     BookManage.Loan();
+                }
+                else if (ui == "RE"||ui=="re")
+                {
+                    BookManage.Return();
                 }
                 else
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,16 +11,18 @@ namespace Bibliotek
     {
 
         private static List<Book> dataBase = new List<Book>();
+
+
+
         public static void BookAdd()
         {
-
 
             Console.Write("Hur många böcker vill du lägga till? ");
             int numberOfBooks;
 
             while (!int.TryParse(Console.ReadLine(), out numberOfBooks) || numberOfBooks <= 0)
             {
-                Console.WriteLine("Mata in ett heltal!");
+                Console.WriteLine("Mata in ett heltal större än noll!");
                 Console.Write("Hur många böcker vill du lägga till? ");
             }
 
@@ -37,7 +40,7 @@ namespace Bibliotek
                 Console.Write("Mata in bokens sidor: ");
                 while (!int.TryParse(Console.ReadLine(), out pages) || pages <= 0)
                 {
-                    Console.WriteLine("Mata in ett heltal!");
+                    Console.WriteLine("Mata in ett heltal större än noll!");
                     Console.Write("Mata in bokens sidor: ");
                 }
 
@@ -50,6 +53,7 @@ namespace Bibliotek
             Console.Clear();
         }
 
+
         public static void BookRemove()
         {
             Console.WriteLine("Vilken bok vill du ta bort? ");
@@ -59,9 +63,8 @@ namespace Bibliotek
             {
                 if (removeBook == dataBase[i].title)
                 {
-                    Console.WriteLine($"{dataBase[i]} har tagits bort från biblioteket.");
+                    Console.WriteLine($"{dataBase[i].title} har tagits bort från biblioteket.");
                     dataBase.RemoveAt(i);
-                    i--;
                 }
             }
 
@@ -74,7 +77,10 @@ namespace Bibliotek
         {
 
             Console.WriteLine("Vilken bok vill du ta låna? ");
+            
+            
             string loanBook = Console.ReadLine();
+
 
             for (int i = 0; i < dataBase.Count; i++)
             {
@@ -83,11 +89,38 @@ namespace Bibliotek
                     dataBase[i].loan = true;
                     Console.WriteLine("Du har lånat: " + dataBase[i].title);
                 }
+                else
+                {
+                    Console.WriteLine("Boken finns inte i biblioteket eller så har du stavat fel!");
+                }
             }
 
             Console.ReadKey();
             Console.Clear();
 
+        }
+
+        public static void Return()
+        {
+
+            Console.WriteLine("Vilken bok vill du lämna tillbaka? ");
+
+            string returnBook = Console.ReadLine();
+
+            for (int i = 0; i < dataBase.Count; i++)
+            {
+                if (returnBook == dataBase[i].title)
+                {
+                    dataBase[i].loan = false;
+                    Console.WriteLine("Du har lämnat tillbaka: " + dataBase[i].title);
+                }
+                else
+                {
+                    Console.WriteLine("Boken finns inte i biblioteket eller så har du stavat fel!");
+                }
+            }
+            Console.ReadKey();
+            Console.Clear();
         }
 
 
@@ -96,7 +129,7 @@ namespace Bibliotek
 
         public static void LibraryInfo()
         {
-
+            Console.WriteLine();
             Console.WriteLine("Du har " + dataBase.Count + " böcker.");
             Console.WriteLine("De är:");
             foreach (var book in dataBase)
